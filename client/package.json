@@ -6,10 +6,12 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.25.0",
     "latest-version": "^6.0.0",
     "npm": "^5.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "web-vitals": "^2.1.4"
   },
@@ -40,5 +42,6 @@
   "devDependencies": {
     "@apideck/better-ajv-errors": "^0.3.2",
     "fork-ts-checker-webpack-plugin": "^6.5.0"
-  }
+  },
+  "proxy": "http://localhost:5000/"
 }
