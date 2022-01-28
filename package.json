@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Madushan97/Rooms_Booking_App#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mongoose": "^6.1.8"
   }
 }
