@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Madushan97/Rooms_Booking_App/issues"
   },
-  "homepage": "https://github.com/Madushan97/Rooms_Booking_App#readme"
+  "homepage": "https://github.com/Madushan97/Rooms_Booking_App#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
