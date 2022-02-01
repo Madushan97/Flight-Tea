@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Carousel } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+
 
 function Room({room}) {
 
@@ -28,6 +30,9 @@ function Room({room}) {
               
 
               <div style={{float: 'right'}}>
+                <Link to={`/book/${room._id}`}>
+                  <button className='btn btn-success m-2'>Book Now</button>
+                </Link>
                 <button className='btn btn-success' onClick={handleShow}>View Details</button>
               </div>
 
