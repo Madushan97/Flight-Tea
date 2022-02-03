@@ -52,7 +52,8 @@ function Room({room}) {
                   return <Carousel.Item>
                   <img
                     className="d-block w-100 bigimg"
-                    src={url}                    
+                    src={url}   
+                    alt = " "                 
                   />                  
                 </Carousel.Item>
 
