@@ -59,3 +59,20 @@ h1 {
   height: 400px;
   border-radius: 5px !important;
 }
+
+input {
+  box-shadow: none !important;
+  margin-top: 20px;
+  border: 1px solid rgb(22, 133, 141) !important;
+
+}
+
+h2 {
+  font-size: 30px !important;
+  padding: 20px;
+  font-weight: bold;
+}
+
+.dropdown-toggle {
+  border: 0px solid black !important;
+}

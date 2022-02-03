@@ -4,7 +4,7 @@ import Loader from '../components/Loader';
 import Error from '../components/Error';
 
 
-function Bookingscreen({match}) {
+function Bookingscreen({ match }) {
 
     const[loading, setloading] = useState(true);
     const[error, seterror] = useState();
@@ -13,30 +13,27 @@ function Bookingscreen({match}) {
     useEffect(async() => {
 
         try {
-
-            setloading(true)
-            // fetch the details from rooms model
-            const data = (await axios.post('/api/rooms/getroombyid', {roomid : match.params.roomid})).data
+            setloading(true);            
+            const data = (await axios.post('/api/rooms/getroombyid', {roomid : match.params.roomid})).data;
             setroom(data);
-            setloading(false)
+            setloading(false);
             
         } catch (error) { 
-            setloading(false)
             seterror(true)           
-            // console.log(error);
-
+            setloading(false)
         }
-    }, [])
+    }, []);
 
   return (
     <div className='m-5'>
+
         {loading ? (<Loader/>) : room ? (<div>
 
             <div className='row justify-content-center mt-5 bs'>
-
+            
                 <div className='col-md-6'>
                     <h1>{room.name}</h1>
-                    <img src={room.imageurls[0]} className='bigimg'/>
+                    <img src={room.imageurls[0]} className='bigimg' alt=''/>
                 </div>
 
                 <div className='col-md-6'>
@@ -71,13 +68,10 @@ function Bookingscreen({match}) {
 
             </div>
 
-        </div>
-        ) :
-             (<Error/>)
-        }
+        </div>) : (<Error/>)}        
         
     </div>
-  )
+  );
 }
 
 export default Bookingscreen;
