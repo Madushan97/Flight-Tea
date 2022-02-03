@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Loader from '../components/Loader';
+import Error from '../components/Error';
 
 function Loginscreen(){
 
     const[email, setemail] = useState('')
     const[password, setpassword] = useState('')
+
+    const[loading, setloading] = useState(false);
+    const[error, seterror] = useState();
 
     async function Login(){
        
@@ -13,22 +18,32 @@ function Loginscreen(){
                 password,                
             }
             try {
-                const result = await axios.post('/api/users/login', user).data
+                setloading(true)
+                const result = (await axios.post('/api/users/login', user)).data
+                setloading(false)
+
+                // store user in local storage to navigate him anywhere
+                localStorage.setItem('currentUser', JSON.stringify(result))
+                window.location.href = '/home'
 
             } catch (error) {
                 console.error(error);
+                setloading(false)
+                seterror(true)
 
             }
-            console.log(user)        
-        }        
-    
+            
+        }    
 
     return (
-
         
-        <div>
+        <div>          
+
             <div className='row justify-content-center mt-5'>
+            {loading && (<Loader/>)}
                 <div className='col-md-5 mt-5'>
+
+                    {error && (<Error message = 'Invalid Credentials :('/>)}
 
                     <div className='bs'>
                         <h2 align='center'>Login</h2>
@@ -57,6 +72,5 @@ function Loginscreen(){
         </div>
     )
 }
-
 
 export default Loginscreen;

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Loader from '../components/Loader';
+import Error from '../components/Error';
+import Success from '../components/Success';
 
  function Registerscreen(){
 
@@ -8,9 +11,13 @@ import axios from 'axios'
     const[password, setpassword] = useState('')
     const[cpassword, setcpassword] = useState('')
 
+    const[loading, setloading] = useState(false);
+    const[error, seterror] = useState();
+    const[success, setsuccess] = useState()
+
     async function register(){
 
-        if(password==cpassword){
+        if(password === cpassword){
             const user = {
                 name,
                 email,
@@ -19,11 +26,21 @@ import axios from 'axios'
             }
             
             try {
-                const result = await axios.post('/api/users/register', user).data
+                setloading(true)
+                const result = (await axios.post('/api/users/register', user)).data
+                setloading(false)
+                setsuccess(true)
+
+                // after registration all the fields are going to empty
+                setname('')
+                setemail('')
+                setpassword('')
+                setcpassword('')
 
             } catch (error) {
-                console.error(error);
-
+                console.log(error);
+                setloading(false)
+                seterror(true)
             }
         } else {
             alert('Password not matched :(')
@@ -31,12 +48,16 @@ import axios from 'axios'
         
     }
 
-    return (
-
-        
+    return (        
         <div>
+
+            {loading && (<Loader/>)}
+            {error && (<Error/>)}           
+
             <div className='row justify-content-center mt-5'>
                 <div className='col-md-5 mt-5'>
+
+                {success && (<Success message='Registration success :)'/>)}
 
                     <div className='bs'>
                         <h2 align='center'>Register</h2>

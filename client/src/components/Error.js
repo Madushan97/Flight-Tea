@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Error() {
+function Error({message}) {
   return (
     <div>
         <div class="alert alert-danger" role="alert">
-            Something went wrong. Please try again later...
+            {message}
         </div>
     </div>
   )

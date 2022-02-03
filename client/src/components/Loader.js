@@ -3,7 +3,7 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 
 function Loader() {
 
-  let [loading, setLoading] = useState(true);
+  let [loading, setloading] = useState(true);
 
   return (
       <div className={{marginTop: '150px'}}>
