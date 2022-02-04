@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
+import moment from 'moment';
 
 
 function Bookingscreen({ match }) {
@@ -9,6 +10,13 @@ function Bookingscreen({ match }) {
     const[loading, setloading] = useState(true);
     const[error, seterror] = useState();
     const[room, setroom] = useState();
+
+    const roomid = match.params.roomid
+    const fromdate = moment(match.params.fromdate, 'DD-MM-YYYY')
+    const todate = moment(match.params.todate, 'DD-MM-YYYY')
+   
+    // different between 2 days
+    const totaldays = moment.duration(todate.diff(fromdate)).asDays()+1
 
     useEffect(async() => {
 
@@ -43,8 +51,8 @@ function Bookingscreen({ match }) {
                     <div>
                         <b>
                         <p>Name :</p>
-                        <p>From Date :</p>
-                        <p>To Date :</p>
+                        <p>From Date : {match.params.fromdate}</p>
+                        <p>To Date : {match.params.todate}</p>
                         <p>Max Count : {room.maxcount}</p>
                         </b>
                     </div>
@@ -54,7 +62,7 @@ function Bookingscreen({ match }) {
                         <hr/>
 
                         <b>
-                        <p>Total Days :</p>
+                        <p>Total Days : {totaldays}</p>
                         <p>Rent per Day : {room.rentperday}</p>
                         <p>Total Amount :</p>                        
                         </b>

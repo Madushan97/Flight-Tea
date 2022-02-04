@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
 
         <Route path='/home' component={Homescreen}/>
-        <Route path='/book/:roomid' exact component={Bookingscreen}/>
+        <Route path='/book/:roomid/:fromdate/:todate' exact component={Bookingscreen}/>
         <Route path='/register' exact component={Registerscreen}/>
         <Route path='/login' exact component={Loginscreen}/>
 
