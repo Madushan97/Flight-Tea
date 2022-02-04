@@ -18,6 +18,8 @@ function Homescreen() {
     const[fromdate, setfromdate] = useState()
     const[todate, settodate] = useState()
 
+    const[duplicaterooms, setduplicatrooms] = useState([])
+
     useEffect( async() => {
 
         try {
@@ -26,6 +28,7 @@ function Homescreen() {
             // fetch the details from rooms model
             const data = (await axios.get('/api/rooms/getallrooms')).data
             setrooms(data);
+            setduplicatrooms(data)
             setloading(false)
             
         } catch (error) { 
@@ -40,6 +43,39 @@ function Homescreen() {
         
         setfromdate(moment(dates[0]).format('DD-MM-YYYY'));
         settodate(moment(dates[1]).format('DD-MM-YYYY'));
+
+        var temprooms = []
+        var availability = false
+
+        for(const room of duplicaterooms) {
+
+            if(room.currentbookings.length > 0) {
+                    // checking booking date is between from,to date
+                for(const booking of room.currentbookings) {
+
+                    if(!moment(moment(dates[0]).format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate)
+                    && !(moment(moment(dates[1]).format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate))
+                    ){
+                        // dates are equal to
+                        if(
+                            moment(dates[0]).format('DD-MM-YYYY') !== booking.fromdate &&
+                            moment(dates[0]).format('DD-MM-YYYY') !== booking.todate &&
+                            moment(dates[1]).format('DD-MM-YYYY') !== booking.fromdate &&
+                            moment(dates[1]).format('DD-MM-YYYY') !== booking.todate
+                        ) {
+                            availability = true
+                        }
+                    }
+                }
+            }
+
+            if(availability === true || room.currentbookings.length===0) {
+
+                temprooms.push(room)
+            }
+
+            setrooms(temprooms)
+        }
         
     }
 
