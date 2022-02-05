@@ -20,6 +20,9 @@ function Homescreen() {
 
     const[duplicaterooms, setduplicatrooms] = useState([])
 
+    const[searchkey, setsearchkey] = useState('')
+    const[type, settype] = useState('all')
+
     useEffect( async() => {
 
         try {
@@ -79,23 +82,56 @@ function Homescreen() {
         
     }
 
+    function filterBySearch() {
+        const temprooms = duplicaterooms.filter(room => room.name.toLowerCase().includes(searchkey.toLowerCase()))
+
+        setrooms(temprooms)
+
+    }
+
+    function filterByType(e) {
+
+        settype(e)
+
+        if(e!=='all') {
+            const temprooms = duplicaterooms.filter(room => room.type.toLowerCase() == e.toLowerCase())
+            setrooms(temprooms)
+        } else {
+            setrooms(duplicaterooms)
+        }
+        
+    }
+
   return (
     <div className='container mt-5'>
 
-        <div className='row'>
+        <div className='row bs'>
             <div className='col-md-3'>
                 <RangePicker format='DD-MM-YYYY' onChange={filterByDate}/>
             </div>
+            <div className='col-md-5'>
+                <input type='text' className='form-control' placeholder='Search Rooms'
+                    value={searchkey} onChange={(e)=> {setsearchkey(e.target.value)}} onKeyUp={filterBySearch}
+                />
+            </div>
+            <div className='col-md-3'>
+            <select className='form-control' value={type} onChange={(e)=> {filterByType(e.target.value)}}>
+                <option value="all">All</option>
+                <option value="Delux">Delux</option>
+                <option value="Non-Delux">Non-Delux</option>
+            </select>
+            </div>
+           
         </div>
 
         <div className='row justify-content-center mt-5'>
-            {loading ? (<Loader/>) : rooms.length>1 ? (rooms.map((room) => {
+            {loading ? (<Loader/>) : (rooms.map((room) => {
             // 9 columns
             return <div className='col-md-9 mt-2'>
                 <Room room={room} fromdate={fromdate} todate={todate}/>
             </div>
         })
-            ) : (<Error/>)
+            ) 
         }
         </div>      
     </div>
