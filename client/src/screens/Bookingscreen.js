@@ -3,6 +3,8 @@ import axios from 'axios';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 import moment from 'moment';
+import StripeCheckout from 'react-stripe-checkout';
+import Swal from 'sweetalert2'
 
 
 function Bookingscreen({ match }) {
@@ -36,8 +38,10 @@ function Bookingscreen({ match }) {
         }
     }, []);
 
-    async function bookRoom() {
+    
+    async function onToken(token) {
 
+        console.log(token);
         const bookingDetails = {
 
             room,
@@ -45,14 +49,21 @@ function Bookingscreen({ match }) {
             fromdate,
             todate,
             totalamount,
-            totaldays
+            totaldays,
+            token
         }
 
         try {
+            setloading(true)
             const result = await axios.post('/api/bookings/bookroom', bookingDetails)
+            setloading(false)
+            Swal.fire('Congratulations', 'Your Room Booked Successfully', 'success').then(result => {
+                window.location.href = '/bookings'
+            })
 
         } catch (error) {
-            
+            setloading(false)
+            Swal.fire('Ooooooops', 'Something went Wrong', 'error')
         }
     }
 
@@ -93,7 +104,15 @@ function Bookingscreen({ match }) {
                     </div>
 
                     <div style={{float:'right'}}>
-                        <button className='btn btn-success' onClick={bookRoom}>Pay Now</button>
+                       
+                        <StripeCheckout
+                        amount = {totalamount * 100}
+                            token={onToken}
+                            currency='LKR'
+                            stripeKey="pk_test_51KPgXCJUUTpprrglGE0vUrg3WQupMUlUoHicgRyspZT8wLQLOfDqK5ZnKi7XJ2jiNBNzDhPxc2RqQOAxCiTW8SvO00b1HVqcdC"
+                        >
+                             <button className='btn btn-success'>Pay Now</button>
+                        </StripeCheckout>
                     </div>
 
                 </div>
