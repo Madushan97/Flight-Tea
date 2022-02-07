@@ -82,3 +82,7 @@ h2 {
 .ant-picker-input input{
   border: none !important;
 }
+
+p {
+  font-size: 15px !important;
+}
