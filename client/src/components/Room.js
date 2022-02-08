@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { Modal, Button, Carousel } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+// ..
+AOS.init({
+    duration: 2000
+});
 
 function Room({room, fromdate, todate}) {
 
@@ -13,7 +18,7 @@ function Room({room, fromdate, todate}) {
 
   return (
     <div>
-        <div className='row bs'>
+        <div className='row bs' data-aos='fade-up'>
           {/* for the image 4 column dedicated */}
           <div className='col-md-4'>
               <img src={room.imageurls[0]} className='smallimg' />
