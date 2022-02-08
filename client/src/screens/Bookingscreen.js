@@ -5,7 +5,12 @@ import Error from '../components/Error';
 import moment from 'moment';
 import StripeCheckout from 'react-stripe-checkout';
 import Swal from 'sweetalert2'
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+// ..
+AOS.init({
+    duration: 2000
+});
 
 function Bookingscreen({ match }) {
 
@@ -37,8 +42,8 @@ function Bookingscreen({ match }) {
             setloading(false);
             
         } catch (error) { 
-            seterror(true)           
             setloading(false)
+            seterror(true)           
         }
     }, []);
 
@@ -76,7 +81,7 @@ function Bookingscreen({ match }) {
 
         {loading ? (<Loader/>) : room ? (<div>
 
-            <div className='row justify-content-center mt-5 bs'>
+            <div className='row justify-content-center mt-5 bs' data-aos='flip-right'>
             
                 <div className='col-md-6'>
                     <h1>{room.name}</h1>
