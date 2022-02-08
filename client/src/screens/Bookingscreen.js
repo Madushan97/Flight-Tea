@@ -25,6 +25,10 @@ function Bookingscreen({ match }) {
 
     useEffect(async() => {
 
+        if(localStorage.getItem('currentUser')) {
+            window.location.reload='/login'
+        }
+
         try {
             setloading(true);            
             const data = (await axios.post('/api/rooms/getroombyid', {roomid : match.params.roomid})).data;

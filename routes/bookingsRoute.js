@@ -74,4 +74,41 @@ router.post('/bookroom', async(req, res) => {
     
 })
 
+router.post('/getbookingsbyuserid', async(req, res) => {
+
+    const userid = req.body.userid
+
+    try {
+        const bookings = await Booking.find({userid : userid})
+        res.send(bookings)
+    } catch (error) {
+        return res.status(400).json({ error })
+    }
+})
+
+router.post('/cancelBooking', async(req, res) => {
+
+    const {bookingid, roomid} = req.body
+
+    try {
+        const bookingitem = await Booking.findOne({ _id : bookingid })
+        bookingitem.status = 'Cancelled'
+        await bookingitem.save()
+        // finding room
+        const room = await Room.findOne({_id : roomid})
+        // getting current booking from the booking
+        const bookings = room.currentbookings
+
+        const temp = bookings.filter(booking => booking.bookingid.toString()!==bookingid)
+        room.currentbookings = temp
+
+        await room.save()
+
+        res.send("Your booking cancelled successfully :)")
+
+    } catch (error) {
+        return res.status(400).json({error})
+    }
+})
+
 module.exports = router

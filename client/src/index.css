@@ -60,11 +60,13 @@ h1 {
   border-radius: 5px !important;
 }
 
-input {
+input, select, .ant-picker {
   box-shadow: none !important;
   margin-top: 20px;
   border: 1px solid rgb(22, 133, 141) !important;
-
+  width: 100%;
+  border-radius: 3px !important;
+  height: 35px !important;
 }
 
 h2 {
@@ -75,4 +77,12 @@ h2 {
 
 .dropdown-toggle {
   border: 0px solid black !important;
+}
+
+.ant-picker-input input{
+  border: none !important;
+}
+
+p {
+  font-size: 15px !important;
 }
